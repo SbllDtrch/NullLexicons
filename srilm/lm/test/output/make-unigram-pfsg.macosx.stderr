@@ -1,0 +1,1 @@
+./run-test: SRILM/bin/macosx/make-ngram-pfsg: -f: bad interpreter: No such file or directory

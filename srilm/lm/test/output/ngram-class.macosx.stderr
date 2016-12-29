@@ -1,0 +1,5 @@
+./run-test: line 15: gawk: command not found
+../disambig/newdevtest.ascii: line 5518: 5518 sentences, 47417 words, 47417 OOVs
+0 zeroprobs, logprob= 0 ppl= 1 ppl1= undefined
+5518 sentences, 47417 words, 0 OOVs
+0 zeroprobs, logprob= -28053 ppl= 3.38807 ppl1= 3.90503

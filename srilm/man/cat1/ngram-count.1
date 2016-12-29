@@ -1,0 +1,528 @@
+
+
+
+User Commands                                      ngram-count(1)
+
+
+
+NAME
+     ngram-count - count N-grams and estimate language models
+
+SYNOPSIS
+     ngram-count [ -help ] _o_p_t_i_o_n ...
+
+DESCRIPTION
+     ngram-count generates and  manipulates  N-gram  counts,  and
+     estimates  N-gram  language  models  from them.  The program
+     first builds an internal N-gram count set, either by reading
+     counts  from  a  file, or by scanning text input.  Following
+     that, the resulting counts can be output back to a  file  or
+     used  for  building  an N-gram language model in ARPA ngram-
+     format(5).   Each  of  these   actions   is   triggered   by
+     corresponding options, as described below.
+
+OPTIONS
+     Each filename argument can be an ASCII file, or a compressed
+     file  (name  ending  in  .Z  or  .gz),  or ``-'' to indicate
+     stdin/stdout.
+
+     -help
+          Print option summary.
+
+     -version
+          Print version information.
+
+     -order _n
+          Set the maximal order (length)  of  N-grams  to  count.
+          This  also determines the order of the estimated LM, if
+          any.  The default order is 3.
+
+     -vocab _f_i_l_e
+          Read a vocabulary  from  file.   Subsequently,  out-of-
+          vocabulary  words  in  both counts or text are replaced
+          with the unknown-word token.  If  this  option  is  not
+          specified  all  words found are implicitly added to the
+          vocabulary.
+
+     -vocab-aliases _f_i_l_e
+          Reads vocabulary alias definitions from _f_i_l_e,  consist-
+          ing of lines of the form
+               _a_l_i_a_s _w_o_r_d
+          This causes all tokens _a_l_i_a_s to be mapped to _w_o_r_d.
+
+     -write-vocab _f_i_l_e
+          Write the vocabulary built in the counting  process  to
+          _f_i_l_e.
+
+     -write-vocab-index _f_i_l_e
+          Write the internal word-to-integer mapping to _f_i_l_e.
+
+
+
+
+SRILM Tools Last change: $Date: 2012/04/12 20:01:16 $           1
+
+
+
+
+
+
+User Commands                                      ngram-count(1)
+
+
+
+     -tagged
+          Interpret text and N-grams as  consisting  of  word/tag
+          pairs.
+
+     -tolower
+          Map all vocabulary to lowercase.
+
+     -memuse
+          Print memory usage statistics.
+
+  Counting Options
+     -text _t_e_x_t_f_i_l_e
+          Generate N-gram counts from text file.  _t_e_x_t_f_i_l_e should
+          contain one sentence unit per line.  Begin/end sentence
+          tokens are added if not already present.   Empty  lines
+          are ignored.
+
+     -text-has-weights
+          Treat the first field in each  text  input  line  as  a
+          weight  factor by which the N-gram counts for that line
+          are to be multiplied.
+
+     -no-sos
+          Disable the automatic  insertion  of  start-of-sentence
+          tokens in N-gram counting.
+
+     -no-eos
+          Disable  the  automatic  insertion  of  end-of-sentence
+          tokens in N-gram counting.
+
+     -read _c_o_u_n_t_s_f_i_l_e
+          Read N-gram counts from a file.  Ascii count files con-
+          tain  one  N-gram  of  words  per  line, followed by an
+          integer count, all separated by  whitespace.   Repeated
+          counts  for  the  same  N-gram are added.  Thus several
+          count files can be merged by using cat(1)  and  feeding
+          the  result  to  ngram-count  -read  -  (but see ngram-
+          merge(1)  for  merging  counts  that  exceed  available
+          memory).  Counts collected by -text and -read are addi-
+          tive as well.  Binary count files (see below) are  also
+          recognized.
+
+     -read-google _d_i_r
+          Read N-grams counts from an indexed directory structure
+          rooted in dir, in a format developed by Google to store
+          very  large  N-gram  collections.   The   corresponding
+          directory  structure  can  be  created using the script
+          make-google-ngrams described in training-scripts(1).
+
+     -intersect _f_i_l_e
+          Limit reading of counts via -read and -read-google to a
+          subset  of N-grams defined by another count _f_i_l_e.  (The
+
+
+
+SRILM Tools Last change: $Date: 2012/04/12 20:01:16 $           2
+
+
+
+
+
+
+User Commands                                      ngram-count(1)
+
+
+
+          counts in  _f_i_l_e  are  ignored,  only  the  N-grams  are
+          relevant.)
+
+     -write _f_i_l_e
+          Write total counts to _f_i_l_e.
+
+     -write-binary _f_i_l_e
+          Write total counts to _f_i_l_e in  binary  format.   Binary
+          count  files  cannot  be  compressed  and are typically
+          larger than compressed  ascii  count  files.   However,
+          they  can be loaded faster, especially when the -limit-
+          vocab option is used.
+
+     -write-order _n
+          Order of counts to write.   The  default  is  0,  which
+          stands for N-grams of all lengths.
+
+     -write_n _f_i_l_e
+          where _n is 1, 2, 3, 4, 5, 6, 7, 8, or 9.   Writes  only
+          counts  of  the  indicated order to _f_i_l_e.  This is con-
+          venient  to  generate  counts   of   different   orders
+          separately in a single pass.
+
+     -sort
+          Output counts in lexicographic order, as  required  for
+          ngram-merge(1).
+
+     -recompute
+          Regenerate lower-order counts by summing  the  highest-
+          order counts for each N-gram prefix.
+
+     -limit-vocab
+          Discard N-gram counts on reading that do not pertain to
+          the  words specified in the vocabulary.  The default is
+          that words used in the count  files  are  automatically
+          added to the vocabulary.
+
+  LM Options
+     -lm _l_m_f_i_l_e
+          Estimate a backoff N-gram model from the total  counts,
+          and write it to _l_m_f_i_l_e in ngram-format(5).
+
+     -write-binary-lm
+          Output _l_m_f_i_l_e in binary format.  If an  LM  class  does
+          not  provide  a binary format the default (text) format
+          will be output instead.
+
+     -nonevents _f_i_l_e
+          Read a list of words from _f_i_l_e  that  are  to  be  con-
+          sidered  non-events,  i.e.,  that can only occur in the
+          context of an N-gram.  Such words are given zero proba-
+          bility mass in model estimation.
+
+
+
+SRILM Tools Last change: $Date: 2012/04/12 20:01:16 $           3
+
+
+
+
+
+
+User Commands                                      ngram-count(1)
+
+
+
+     -float-counts
+          Enable manipulation of fractional counts.  Only certain
+          discounting methods support non-integer counts.
+
+     -skip
+          Estimate a ``skip'' N-gram model, which predicts a word
+          by  an  interpolation  of the immediate context and the
+          context one word  prior.   This  also  triggers  N-gram
+          counts  to  be  generated that are one word longer than
+          the indicated order.  The following four  options  con-
+          trol the EM estimation algorithm used for skip-N-grams.
+
+     -init-lm _l_m_f_i_l_e
+          Load an LM to initialize the parameters of the  skip-N-
+          gram.
+
+     -skip-init _v_a_l_u_e
+          The initial skip probability for all words.
+
+     -em-iters _n
+          The maximum number of EM iterations.
+
+     -em-delta _d
+          The convergence  criterion  for  EM:  if  the  relative
+          change  in  log likelihood falls below the given value,
+          iteration stops.
+
+     -count-lm
+          Estimate a count-based interpolated LM  using  Jelinek-
+          Mercer  smoothing  (Chen  & Goodman, 1998).  Several of
+          the options for skip-N-gram LMs (above) apply.  An ini-
+          tial count-LM in the format described in ngram(1) needs
+          to be specified using -init-lm.  The options  -em-iters
+          and  -em-delta control termination of the EM algorithm.
+          Note that  the  N-gram  counts  used  to  estimate  the
+          maximum-likelihood  estimates  come  from  the -init-lm
+          model.  The counts specified with -read  or  -text  are
+          used  only  to  estimate  the  smoothing (interpolation
+          weights).
+
+     -unk Build an ``open vocabulary'' LM, i.e.,  one  that  con-
+          tains  the  unknown-word  token as a regular word.  The
+          default is to remove the unknown word.
+
+     -map-unk _w_o_r_d
+          Map out-of-vocabulary words to _w_o_r_d,  rather  than  the
+          default <unk> tag.
+
+     -trust-totals
+          Force the lower-order counts to be used as total counts
+          in  estimating  N-gram  probabilities.   Usually  these
+          totals are recomputed from the higher-order counts.
+
+
+
+SRILM Tools Last change: $Date: 2012/04/12 20:01:16 $           4
+
+
+
+
+
+
+User Commands                                      ngram-count(1)
+
+
+
+     -prune _t_h_r_e_s_h_o_l_d
+          Prune N-gram  probabilities  if  their  removal  causes
+          (training  set)  perplexity of the model to increase by
+          less than _t_h_r_e_s_h_o_l_d relative.
+
+     -minprune _n
+          Only prune N-grams of length at least _n.   The  default
+          (and  minimum  allowed value) is 2, i.e., only unigrams
+          are excluded from pruning.
+
+     -debug _l_e_v_e_l
+          Set debugging output from estimated LM at _l_e_v_e_l.  Level
+          0  means  no debugging.  Debugging messages are written
+          to stderr.
+
+     -gt_nmin _c_o_u_n_t
+          where _n is 1, 2, 3, 4, 5, 6,  7,  8,  or  9.   Set  the
+          minimal  count  of  N-grams  of  order  _n  that will be
+          included in the LM.  All N-grams with  frequency  lower
+          than that will effectively be discounted to 0.  If _n is
+          omitted the parameter for N-grams of order > 9 is set.
+          NOTE: This option affects not only  the  default  Good-
+          Turing  discounting  but  the  alternative  discounting
+          methods described below as well.
+
+     -gt_nmax _c_o_u_n_t
+          where _n is 1, 2, 3, 4, 5, 6, 7, 8, or 9.  Set the maxi-
+          mal  count  of  N-grams  of order _n that are discounted
+          under Good-Turing.  All N-grams more frequent than that
+          will receive maximum likelihood estimates.  Discounting
+          can be effectively disabled by setting this to 0.  If _n
+          is  omitted  the  parameter for N-grams of order > 9 is
+          set.
+
+     In the following discounting parameter options, the order  _n
+     may  be omitted, in which case a default for all N-gram ord-
+     ers is  set.   The  corresponding  discounting  method  then
+     becomes  the  default method for all orders, unless specifi-
+     cally overridden by an option with  _n.   If  no  discounting
+     method is specified, Good-Turing is used.
+
+     -gt_n _g_t_f_i_l_e
+          where _n is 1, 2, 3, 4, 5, 6,  7,  8,  or  9.   Save  or
+          retrieve  Good-Turing parameters (cutoffs and discount-
+          ing factors) in/from _g_t_f_i_l_e.   This  is  useful  as  GT
+          parameters  should  always be determined from unlimited
+          vocabulary counts, whereas the eventual LM  may  use  a
+          limited  vocabulary.   The  parameter files may also be
+          hand-edited.  If an -lm  option  is  specified  the  GT
+          parameters  are  read  from  _g_t_f_i_l_e, otherwise they are
+          computed from the current counts and saved in _g_t_f_i_l_e.
+
+
+
+
+SRILM Tools Last change: $Date: 2012/04/12 20:01:16 $           5
+
+
+
+
+
+
+User Commands                                      ngram-count(1)
+
+
+
+     -cdiscount_n _d_i_s_c_o_u_n_t
+          where _n is 1, 2, 3, 4, 5, 6, 7, 8,  or  9.   Use  Ney's
+          absolute  discounting  for  N-grams  of  order _n, using
+          _d_i_s_c_o_u_n_t as the constant to subtract.
+
+     -wbdiscount_n
+          where _n is 1, 2, 3, 4, 5, 6, 7, 8, or 9.   Use  Witten-
+          Bell  discounting for N-grams of order _n.  (This is the
+          estimator where the first occurrence of  each  word  is
+          taken to be a sample for the ``unseen'' event.)
+
+     -ndiscount_n
+          where _n is 1, 2, 3, 4, 5, 6, 7, 8, or 9.  Use  Ristad's
+          natural discounting law for N-grams of order _n.
+
+     -addsmooth_n _d_e_l_t_a
+          where _n is 1, 2, 3, 4, 5, 6, 7, 8,  or  9.   Smooth  by
+          adding  _d_e_l_t_a  to each N-gram count.  This is usually a
+          poor smoothing method and included mainly for  instruc-
+          tional purposes.
+
+     -kndiscount_n
+          where _n is 1, 2, 3, 4, 5, 6, 7, 8, or 9.  Use Chen  and
+          Goodman's  modified  Kneser-Ney discounting for N-grams
+          of order _n.
+
+     -kn-counts-modified
+          Indicates that input counts have already been  modified
+          for Kneser-Ney smoothing.  If this option is not given,
+          the KN discounting method modifies counts (except those
+          of highest order) in order to estimate the backoff dis-
+          tributions.  When using the -write and related  options
+          the output will reflect the modified counts.
+
+     -kn-modify-counts-at-end
+          Modify Kneser-Ney counts after  estimating  discounting
+          constants, rather than before as is the default.
+
+     -kn_n _k_n_f_i_l_e
+          where _n is 1, 2, 3, 4, 5, 6,  7,  8,  or  9.   Save  or
+          retrieve  Kneser-Ney parameters (cutoff and discounting
+          constants) in/from _k_n_f_i_l_e.  This is useful as smoothing
+          parameters  should  always be determined from unlimited
+          vocabulary counts, whereas the eventual LM  may  use  a
+          limited  vocabulary.   The  parameter files may also be
+          hand-edited.  If an -lm  option  is  specified  the  KN
+          parameters  are  read  from  _k_n_f_i_l_e, otherwise they are
+          computed from the current counts and saved in _k_n_f_i_l_e.
+
+     -ukndiscount_n
+          where _n is 1, 2, 3, 4, 5, 6, 7, 8, or 9.  Use the  ori-
+          ginal  (unmodified)  Kneser-Ney  discounting method for
+
+
+
+SRILM Tools Last change: $Date: 2012/04/12 20:01:16 $           6
+
+
+
+
+
+
+User Commands                                      ngram-count(1)
+
+
+
+          N-grams of order _n.
+
+     -interpolate_n
+          where _n is 1, 2, 3, 4, 5, 6, 7, 8, or  9.   Causes  the
+          discounted  N-gram  probability estimates at the speci-
+          fied order _n to be interpolated with lower-order  esti-
+          mates.   (The result of the interpolation is encoded as
+          a standard backoff model and can be evaluated  as  such
+          -- the interpolation happens at estimation time.)  This
+          sometimes yields  better  models  with  some  smoothing
+          methods  (see Chen & Goodman, 1998).  Only Witten-Bell,
+          absolute  discounting,  and  (original   or   modified)
+          Kneser-Ney smoothing currently support interpolation.
+
+     -meta-tag _s_t_r_i_n_g
+          Interpret words starting with _s_t_r_i_n_g as  count-of-count
+          (meta-count) tags.  For example, an N-gram
+               a b _s_t_r_i_n_g3    4
+          means that there were 4 trigrams starting  with  "a  b"
+          that occurred 3 times each.  Meta-tags are only allowed
+          in the last position of an N-gram.
+          Note: when using -tolower the meta-tag _s_t_r_i_n_g must  not
+          contain any uppercase characters.
+
+     -read-with-mincounts
+          Save memory by eliminating  N-grams  with  counts  that
+          fall below the thresholds set by -gt_Nmin options during
+          -read operation (this assumes the input counts  contain
+          no  duplicate N-grams).  Also, if -meta-tag is defined,
+          these low-count N-grams will be converted to  count-of-
+          count N-grams, so that smoothing methods that need this
+          information still work correctly.
+
+SEE ALSO
+     ngram-merge(1),    ngram(1),    ngram-class(1),    training-
+     scripts(1), lm-scripts(1), ngram-format(5).
+     S. F. Chen and J. Goodman, ``An Empirical Study of Smoothing
+     Techniques  for Language Modeling,'' TR-10-98, Computer Sci-
+     ence Group, Harvard Univ., 1998.
+     S. M. Katz, ``Estimation of Probabilities from  Sparse  Data
+     for  the  Language Model Component of a Speech Recognizer,''
+     _I_E_E_E _T_r_a_n_s. _A_S_S_P 35(3), 400-401, 1987.
+     R. Kneser and H.  Ney,  ``Improved  backing-off  for  M-gram
+     language modeling,'' _P_r_o_c. _I_C_A_S_S_P, 181-184, 1995.
+     H. Ney and U. Essen, ``On Smoothing Techniques  for  Bigram-
+     based  Natural  Language Modelling,'' _P_r_o_c. _I_C_A_S_S_P, 825-828,
+     1991.
+     E. S. Ristad, ``A Natural Law of Succession,'' CS-TR-495-95,
+     Comp. Sci. Dept., Princeton Univ., 1995.
+     I. H. Witten and T. C. Bell, ``The  Zero-Frequency  Problem:
+     Estimating  the  Probabilities  of  Novel Events in Adaptive
+     Text Compression,'' _I_E_E_E _T_r_a_n_s.  _I_n_f_o_r_m_a_t_i_o_n  _T_h_e_o_r_y  37(4),
+
+
+
+SRILM Tools Last change: $Date: 2012/04/12 20:01:16 $           7
+
+
+
+
+
+
+User Commands                                      ngram-count(1)
+
+
+
+     1085-1094, 1991.
+
+BUGS
+     Several of the LM types supported  by  ngram(1)  don't  have
+     explicit support in ngram-count.  Instead, they are built by
+     separately manipulating N-gram counts, followed by  standard
+     N-gram model estimation.
+     LM support for tagged words is incomplete.
+     Only absolute and Witten-Bell discounting currently  support
+     fractional counts.
+     The  combination  of  -read-with-mincounts   and   -meta-tag
+     preserves  enough  count-of-count  information  for _a_p_p_l_y_i_n_g
+     discounting parameters to the input counts, but it does  not
+     necessarily  allow the parameters to be correctly _e_s_t_i_m_a_t_e_d.
+     Therefore, discounting parameters should always be estimated
+     from   full   counts   (e.g.,  using  the  helper  training-
+     scripts(1)), and then read from files.
+     Smoothing with -kndiscount or -ukndiscount has a side-effect
+     on  the N-gram counts, since the lower-order counts are des-
+     tructively modified according to the KN  smoothing  approach
+     (Kneser  &  Ney, 1995).  The -write option will output these
+     modified counts, and  count  cutoffs  specified  by  -gt_Nmin
+     operate  on  the  modified  counts, potentially leading to a
+     different set of N-grams  being  retained  than  with  other
+     discounting  methods.   This  can  be  considered  either  a
+     feature or a bug.
+
+AUTHOR
+     Andreas Stolcke <stolcke@speech.sri.com>.
+     Copyright 1995-2011 SRI International
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SRILM Tools Last change: $Date: 2012/04/12 20:01:16 $           8
+
+
+

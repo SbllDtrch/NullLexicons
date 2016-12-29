@@ -1,0 +1,6 @@
+Spanish.diacmap: line 1: warning: map redefining entry <s>
+Spanish.diacmap: line 2: warning: map redefining entry </s>
+reading 8678 1-grams
+discarded 773 OOV 1-grams
+reading 54929 2-grams
+discarded 5036 OOV 2-grams

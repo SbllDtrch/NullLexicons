@@ -1,0 +1,68 @@
+../obj/macosx$(OBJ_OPTION)/qsort.o: qsort.c
+../obj/macosx$(OBJ_OPTION)/maxalloc.o: maxalloc.c ../../include/option.h ../../include/cfuncproto.h
+../obj/macosx$(OBJ_OPTION)/MemStats.o: MemStats.cc MemStats.h
+../obj/macosx$(OBJ_OPTION)/LHashTrie.o: LHashTrie.cc
+../obj/macosx$(OBJ_OPTION)/SArrayTrie.o: SArrayTrie.cc Trie.cc Trie.h MemStats.h SArray.h Map.h \
+  ../../include/Boolean.h SArray.cc BlockMalloc.h
+../obj/macosx$(OBJ_OPTION)/BlockMalloc.o: BlockMalloc.cc BlockMalloc.h ../../include/TLSWrapper.h \
+  ../../include/tls.h ../../include/Boolean.h
+../obj/macosx$(OBJ_OPTION)/DStructThreads.o: DStructThreads.cc DStructThreads.h BlockMalloc.h \
+  ../../include/tserror.h
+../obj/macosx$(OBJ_OPTION)/Array.o: Array.cc Array.h MemStats.h
+../obj/macosx$(OBJ_OPTION)/IntervalHeap.o: IntervalHeap.cc IntervalHeap.h ../../include/Boolean.h \
+  Array.cc Array.h MemStats.h
+../obj/macosx$(OBJ_OPTION)/Map.o: Map.cc Map.h ../../include/Boolean.h MemStats.h
+../obj/macosx$(OBJ_OPTION)/SArray.o: SArray.cc BlockMalloc.h SArray.h Map.h ../../include/Boolean.h \
+  MemStats.h
+../obj/macosx$(OBJ_OPTION)/LHash.o: LHash.cc LHash.h Map.h ../../include/Boolean.h MemStats.h \
+  BlockMalloc.h
+../obj/macosx$(OBJ_OPTION)/Map2.o: Map2.cc Map2.h LHash.h Map.h ../../include/Boolean.h MemStats.h \
+  LHash.cc BlockMalloc.h
+../obj/macosx$(OBJ_OPTION)/Trie.o: Trie.cc Trie.h MemStats.h LHash.h Map.h ../../include/Boolean.h \
+  LHash.cc BlockMalloc.h
+../obj/macosx$(OBJ_OPTION)/CachedMem.o: CachedMem.cc CachedMem.h ../../include/TLSWrapper.h \
+  ../../include/tls.h ../../include/Boolean.h
+../obj/macosx$(OBJ_OPTION)/testArray.o: testArray.cc Array.cc Array.h MemStats.h
+../obj/macosx$(OBJ_OPTION)/testMap.o: testMap.cc SArray.h Map.h ../../include/Boolean.h MemStats.h \
+  LHash.h SArray.cc BlockMalloc.h LHash.cc
+../obj/macosx$(OBJ_OPTION)/benchHash.o: benchHash.cc ../../include/option.h \
+  ../../include/cfuncproto.h LHash.cc LHash.h Map.h \
+  ../../include/Boolean.h MemStats.h BlockMalloc.h Trie.cc Trie.h
+../obj/macosx$(OBJ_OPTION)/testHash.o: testHash.cc LHash.cc LHash.h Map.h ../../include/Boolean.h \
+  MemStats.h BlockMalloc.h
+../obj/macosx$(OBJ_OPTION)/testSizes.o: testSizes.cc Trie.cc Trie.h MemStats.h LHash.h Map.h \
+  ../../include/Boolean.h LHash.cc BlockMalloc.h ../../include/Counts.h \
+  ../../include/XCount.h ../../include/File.h ../../include/Vocab.h \
+  ../../include/LHash.h ../../include/SArray.h ../../include/Map.h \
+  ../../include/Array.h ../../include/MemStats.h \
+  ../../include/TLSWrapper.h ../../include/tls.h \
+  ../../include/NgramStats.h ../../include/LMStats.h \
+  ../../include/TextStats.h ../../include/Prob.h ../../include/Debug.h \
+  ../../include/Trie.h
+../obj/macosx$(OBJ_OPTION)/testCachedMem.o: testCachedMem.cc CachedMem.cc CachedMem.h \
+  ../../include/TLSWrapper.h ../../include/tls.h ../../include/Boolean.h
+../obj/macosx$(OBJ_OPTION)/testBlockMalloc.o: testBlockMalloc.cc BlockMalloc.h
+../obj/macosx$(OBJ_OPTION)/testMap2.o: testMap2.cc Map2.cc Map2.h LHash.h Map.h \
+  ../../include/Boolean.h MemStats.h LHash.cc BlockMalloc.h
+../obj/macosx$(OBJ_OPTION)/testTrie.o: testTrie.cc Trie.cc Trie.h MemStats.h LHash.h Map.h \
+  ../../include/Boolean.h LHash.cc BlockMalloc.h
+../bin/macosx$(OPTION)/maxalloc:	../obj/macosx$(OPTION)/maxalloc.o
+maxalloc:	../bin/macosx$(OPTION)/maxalloc
+../bin/macosx$(OPTION)/testArray:	../obj/macosx$(OPTION)/testArray.o
+testArray:	../bin/macosx$(OPTION)/testArray
+../bin/macosx$(OPTION)/testMap:	../obj/macosx$(OPTION)/testMap.o
+testMap:	../bin/macosx$(OPTION)/testMap
+../bin/macosx$(OPTION)/benchHash:	../obj/macosx$(OPTION)/benchHash.o
+benchHash:	../bin/macosx$(OPTION)/benchHash
+../bin/macosx$(OPTION)/testHash:	../obj/macosx$(OPTION)/testHash.o
+testHash:	../bin/macosx$(OPTION)/testHash
+../bin/macosx$(OPTION)/testSizes:	../obj/macosx$(OPTION)/testSizes.o
+testSizes:	../bin/macosx$(OPTION)/testSizes
+../bin/macosx$(OPTION)/testCachedMem:	../obj/macosx$(OPTION)/testCachedMem.o
+testCachedMem:	../bin/macosx$(OPTION)/testCachedMem
+../bin/macosx$(OPTION)/testBlockMalloc:	../obj/macosx$(OPTION)/testBlockMalloc.o
+testBlockMalloc:	../bin/macosx$(OPTION)/testBlockMalloc
+../bin/macosx$(OPTION)/testMap2:	../obj/macosx$(OPTION)/testMap2.o
+testMap2:	../bin/macosx$(OPTION)/testMap2
+../bin/macosx$(OPTION)/testTrie:	../obj/macosx$(OPTION)/testTrie.o
+testTrie:	../bin/macosx$(OPTION)/testTrie

@@ -1,0 +1,28 @@
+./go.make-vocab: line 6: gawk: command not found
+Language Model 0 --------------
+-- Level 3
+      Node: W-1,M-1,S-1 (0x7), Constraint: W-1 (0x1)
+         1 Children: M-1,S-1 (0x6)
+-- Level 2
+      Node: M-1,S-1 (0x6), Constraint: M-1,S-1 (0x6)
+         2 Children: S-1 (0x4); M-1 (0x2)
+-- Level 1
+      Node: M-1 (0x2), Constraint: M-1 (0x2)
+         1 Children:  (0x0)
+      Node: S-1 (0x4), Constraint: S-1 (0x4)
+         1 Children:  (0x0)
+-- Level 0
+      Node:  (0x0), Constraint:  (0x0)
+         0 Children:
+../fngram-count/ch_lm_train100.noamp.decomposed.txt.gz: line 22292: 
+LM(0) 22292 sentences, 168590 words, 146298 OOVs
+0 zeroprobs, logprob= 0 ppl= 1 ppl1= 1
+Mod Kneser-Ney smoothing 0-grams
+n1 = 1
+n2 = 1
+n3 = 0
+n4 = 0
+warning: one of required modified KneserNey count-of-counts is zero
+error in discount estimator
+warning: one of required modified KneserNey count-of-counts is zero
+error in discount estimator

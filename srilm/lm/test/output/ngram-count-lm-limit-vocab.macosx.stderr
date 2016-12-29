@@ -1,0 +1,18 @@
+./run-test: line 63: gawk: command not found
+../ngram-count-gt/eval97.text: line 5293: 5290 sentences, 38238 words, 38238 OOVs
+0 zeroprobs, logprob= 0 ppl= 1 ppl1= undefined
+iteration 0: log likelihood = -10664.1
+posterior counts 0: 0/0 0/5290 0/5290
+posterior counts 1: 0/0 0/0 0/0
+posterior counts 2: 0/0 0/0 0/0
+posterior counts 3: 0/0 0/0 0/0
+posterior counts 4: 0/0 0/0 0/0
+posterior counts 5: 5287.93/5290 0/0 0/0
+iteration 1: log likelihood = -5888.54
+posterior counts 0: 0/0 0/5290 0/5290
+posterior counts 1: 0/0 0/0 0/0
+posterior counts 2: 0/0 0/0 0/0
+posterior counts 3: 0/0 0/0 0/0
+posterior counts 4: 0/0 0/0 0/0
+posterior counts 5: 5290/5290 0/0 0/0
+iteration 2: log likelihood = -5887.64

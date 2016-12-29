@@ -1,0 +1,4 @@
+SRILM/bin/make-batch-counts: line 71: gawk: command not found
+final counts in 
++ zdiff 'mycounts/merge-*.ngrams*' all.ngrams.gz
+/usr/bin/zdiff: line 68: mycounts/merge-*.ngrams*: No such file or directory
