@@ -1,4 +1,10 @@
+Data from Dautriche*, Mahowald*, Gibson, Christophe and PIantadosi, Words cluster phonetically beyond phonotactic regularities
+The scripts are minimally annotated but you can always contact isabelle.dautriche@gmail.com if anything is unclear.
+
 #### FILES DESCRIPTION
+#DMGCP_Words cluster phonetically beyond phonotactic regularities_final_version.pdf
+OUR PAPER!
+
 #run_all.sh
 run all the scripts with the appropriate commands to get the main results in the paper
 
@@ -7,7 +13,7 @@ output lexicon of monomorphemes in folder celexes (one word per line)
 
 # main.py
 main script (!):
-- evaluate a model (and write results in the evaluation folders)
+- evaluate a model (and write results in the evaluation folder)
 - generate the null lexicons from a real lexicon (and write it in the Lexicons folder)
 - calculate stats on that (and write in the rifles folder)
 create a folder Graphs and save the lexical network graph in that if you put the graph option (see below)
@@ -55,14 +61,37 @@ Plot the evaluation figure of the paper comparing the results of all the models 
 #figures.r
 Plot all the figures of the paper.
 
-#folder full_lex
+### FOLDERS DESCRIPTION
+#full_lex
 contains the list of all lemmas for each of the 4 languages under study
 
-#folder raw_lex
+#raw_lex
 contains celex and Lexique, in their raw format
 - http://celex.mpi.nl/
 - http://www.lexique.org/docLexique.php
 
-#folder srilm
+#celexes
+contains the lexicons extracted using extract_lex_celex.py and extract_lex_french.py
+
+#Lexicons
+contains files listing real and simulated words for n null lexicons (output of main.py)
+
+#rfiles
+contains the lexical statistics generated from the files in Lexicons (output of main.py or calc_stats.py)
+
+#evaluation
+contains the evaluation scores for each model and each language
+
+#Graph
+contains the network graphs generated from main.py or calc_stats.py (optional)
+
+#pcfg 
+contains the python scripts for computing pcfg out of a corpora (available at http://web.science.mq.edu.au/~mjohnson/Software.htm)
+
+
+#grammars
+contains the grammars used for the pcfg for each language
+
+#srilm
 contains all the srilm package which optionally can be used to compare different smoothing methods 
 http://www.speech.sri.com/projects/srilm/
