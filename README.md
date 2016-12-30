@@ -1,4 +1,4 @@
-Data from Dautriche*, Mahowald*, Gibson, Christophe and PIantadosi, Words cluster phonetically beyond phonotactic regularities
+Data from Dautriche, Mahowald, Gibson, Christophe and Piantadosi, Words cluster phonetically beyond phonotactic regularities
 The scripts are minimally annotated but you can always contact isabelle.dautriche@gmail.com if anything is unclear.
 
 #### FILES DESCRIPTION
