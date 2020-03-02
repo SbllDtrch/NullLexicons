@@ -40,10 +40,10 @@ class NsyllModel(LM):
         unigrams = []
         for k in range(1,self.n+1):
             for item in corpus:
-                 item, ortho, f = item.split(" ")
+                 #item, ortho, f = item.split(" ")
                  item_ngrams = nltk.ngrams(["["]*(k-1) + [i for i in item.split("-")] + ["]"], k)
                  for ng in item_ngrams:
-                    self.cfd[k]["-".join(ng[:-1])][ng[-1]] += 1 * float(f)#.inc(ng[-1])
+                    self.cfd[k]["-".join(ng[:-1])][ng[-1]] += 1 #* float(f)#.inc(ng[-1])#uncomment here for use with frequency
                     unigrams += [ng[-1]]
         U = len(set(unigrams))
         units = set(unigrams)
